@@ -5,10 +5,10 @@ import UserItem from './UserItem'
 import GithubContext from '../../context/github/GithubContext'
 
 function UserResults() {
-    const {users,loading,fetchUsers}= useContext(GithubContext)
+    const {users,loading}= useContext(GithubContext)
 
 useEffect(()=>{
-    fetchUsers()
+    // fetchUsers()
 
 },[])
 
@@ -22,7 +22,6 @@ if(!loading){
             {users.map((user)=>(
              <UserItem key={user.id}  user={user}/>
             ))}
-          user Results
         </div>
       )
 

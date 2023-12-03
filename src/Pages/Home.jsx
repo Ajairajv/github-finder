@@ -8,7 +8,7 @@ function Home() {
       {/* Search Component */}
 
       <UserSearch/>
-      {/* <UserResults/> */}
+      <UserResults/>
 
     </div>
   )

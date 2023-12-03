@@ -5,18 +5,19 @@ import GithubContext from '../../context/github/GithubContext'
 function UserSearch() {
   const [text,setText]=useState('')
 
- const {users}=useContext(GithubContext)
+ const {users ,searchUsers,clearUsers}=useContext(GithubContext)
   const handlechange = (e) => setText(e.target.value)
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-  if(text ===''){
+  if(text === ' '){
     alert('Please enter something')
   } else {
+    searchUsers(text) 
 
     setText('')
-  } }
+  }}
 
 
   return (
@@ -35,7 +36,7 @@ function UserSearch() {
                  onChange={handlechange}
                  />
 
-                 <button type='Submit' className='absolute  hover:bg-teal-900 bg-teal-800  shadow-lg top-0 right-0 rounded-l-none w-36 btn btn-lg'>
+                 <button  type='Submit' className='absolute  hover:bg-teal-900 bg-teal-800  shadow-lg top-0 right-0 rounded-l-none w-36 btn btn-lg'>
                     Go
                  </button>
                 </div>
@@ -45,7 +46,7 @@ function UserSearch() {
        
        {users && users.length >0 &&(
         <div>
-                 <button className='btn btn-ghost btn-lg'>
+                 <button onClick={clearUsers} className='btn btn-ghost btn-lg'>
                  Clear
                  </button>
         </div> 
