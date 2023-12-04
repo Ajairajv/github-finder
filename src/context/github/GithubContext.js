@@ -1,6 +1,6 @@
  import { createContext,useReducer } from "react";
  import GithubReducer from "./GithubReducer";
-import { data } from "autoprefixer";
+
 
  const GithubContext = createContext()
 
@@ -13,6 +13,7 @@ import { data } from "autoprefixer";
     const initialState={
         users:[],
         user:{},
+        repo:{},
         loading:false,
     }
 
@@ -59,6 +60,27 @@ if (response.status === 404){
         }
 }
 
+// get user repos 
+const getUserRepos=async (login) =>{
+    setLoading()
+
+    const params = new URLSearchParams({
+        sort:'created',
+        per_page:10,
+    })
+
+
+    const response =await fetch(`${GITHUB_URL}/users/${login}/repos?${params}`,{
+            headers:{
+                Authorization:`token ${GITHUB_TOKEN}`,
+            },})
+ const data = await response.json()
+    
+        dispatch({
+            type:'GET_REPOS',
+            payload : data,
+})
+}
 
 
 //clear users from state 
@@ -71,12 +93,11 @@ const setLoading = () => dispatch({type:'SET_LOADING'})
     
  return <GithubContext.Provider
    value={{
-    users:state.users,
-    loading:state.loading,
-    user: state.user,
+    ...state,
     searchUsers,
     clearUsers,
     getUser,
+    getUserRepos,
     }}>
     
     {children}
