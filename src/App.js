@@ -3,6 +3,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Alert from './components/layout/Alert';
 import Home from './Pages/Home';
+import User from './Pages/User';
 import Notfound from './Pages/Notfound';
 import About from './Pages/About';
 import{GithubProvider} from './context/github/GithubContext'
@@ -20,6 +21,7 @@ function App() {
                 <Routes>
                   <Route path='/' element={<Home/>}/>
                   <Route path='/about' element={<About/>}/>
+                  <Route path='/user/:login' element={<User/>}/>
                   <Route path='/Notfound' element={<Notfound/>}/>
                   <Route path='/*' element={<Notfound/>}/>
 

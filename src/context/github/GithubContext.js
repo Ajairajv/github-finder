@@ -1,5 +1,6 @@
  import { createContext,useReducer } from "react";
  import GithubReducer from "./GithubReducer";
+import { data } from "autoprefixer";
 
  const GithubContext = createContext()
 
@@ -10,13 +11,14 @@
  export const GithubProvider=({children})=>{
 
     const initialState={
-        user:[],
+        users:[],
+        user:{},
         loading:false,
     }
 
     const [state,dispatch] =useReducer(GithubReducer,initialState)
 
-    //get initial users (ted)
+    //get initial users (ted) search users 
     const searchUsers=async (text) =>{
         setLoading()
 
@@ -27,12 +29,7 @@
         const response =await fetch(`${GITHUB_URL}/search/users?${params}`,{
                 headers:{
                     Authorization:`token ${GITHUB_TOKEN}`,
-                },
-    
-            })
-
-        
-    
+                },})
      const {items} = await response.json()
         
             dispatch({
@@ -40,6 +37,29 @@
                 payload : items,
     })
 }
+
+
+// single user 
+const getUser= async (login) =>{
+    setLoading()
+
+    const response =await fetch(`${GITHUB_URL}/users/${login}`,{
+            headers:{
+                Authorization:`token ${GITHUB_TOKEN}`,
+            },})
+
+if (response.status === 404){
+    window.location ='/notfound'
+} else {
+    const data = await response.json()
+    
+        dispatch({
+            type:'GET_USER',
+            payload : data})
+        }
+}
+
+
 
 //clear users from state 
 const clearUsers=( )=>dispatch({type:'CLEAR_USER'})
@@ -53,9 +73,10 @@ const setLoading = () => dispatch({type:'SET_LOADING'})
    value={{
     users:state.users,
     loading:state.loading,
-   searchUsers,
-   clearUsers,
-    
+    user: state.user,
+    searchUsers,
+    clearUsers,
+    getUser,
     }}>
     
     {children}

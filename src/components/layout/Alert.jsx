@@ -19,7 +19,7 @@ const {alert}=useContext(AlertContext)
         ></path>
       </svg>
     )}
-    <p className='flex-1 text-white text-base font-semibold leading-7' >
+    <p className='flex-1  text-base font-semibold leading-7' >
       <strong>{alert.msg}</strong>
     </p>
   </p>
